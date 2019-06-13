@@ -1,11 +1,16 @@
 package datacategories;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
 import java.io.IOException;
 import java.io.Serializable;
+
+import static datacategories.Utils.getMapper;
 
 @Data
 public class Tip implements Serializable {
@@ -21,8 +26,13 @@ public class Tip implements Serializable {
     int complimentCount;
 
     public static Tip parseJson(String json) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, Tip.class);
+        ObjectMapper objectMapper = getMapper();
+        try {
+            return objectMapper.readValue(json, Tip.class);
+        } catch (JsonParseException exception) {
+            return null;
+        }
+
     }
 
     @Override

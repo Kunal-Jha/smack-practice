@@ -1,6 +1,8 @@
 package datacategories;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.io.Serializable;
+
+import static datacategories.Utils.getMapper;
 
 @Data
 @AllArgsConstructor
@@ -34,7 +38,7 @@ public class Photo implements Serializable {
     }
 
     public static Photo parseJson(String json) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = getMapper();
         return objectMapper.readValue(json, Photo.class);
     }
 }

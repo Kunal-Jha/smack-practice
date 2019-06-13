@@ -10,6 +10,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import java.util.Arrays;
 
 import static com.datastax.spark.connector.japi.CassandraJavaUtil.javaFunctions;
+import static com.datastax.spark.connector.japi.CassandraJavaUtil.mapRowTo;
 import static com.datastax.spark.connector.japi.CassandraJavaUtil.mapToRow;
 
 public class PhotoDataHandler {
@@ -44,6 +45,5 @@ public class PhotoDataHandler {
         sc.stop();
 
     }
-
 
 }

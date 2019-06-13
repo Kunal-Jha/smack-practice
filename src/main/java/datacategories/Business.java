@@ -1,6 +1,8 @@
 package datacategories;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
@@ -8,6 +10,8 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
+
+import static datacategories.Utils.getMapper;
 
 @Data
 public class Business implements Serializable {
@@ -65,7 +69,7 @@ public class Business implements Serializable {
 
 
     public static Business parseJson(String json) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = getMapper();
         return objectMapper.readValue(json, Business.class);
     }
 }

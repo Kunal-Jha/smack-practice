@@ -46,4 +46,10 @@ public class BusinessDataHandler {
 
         sc.stop();
     }
+
+    public static void getDataFromCassanndra(SparkConf conf) {
+        JavaSparkContext sc = new JavaSparkContext(conf);
+        CassandraConnector connector = CassandraConnector.apply(sc.getConf());
+
+    }
 }

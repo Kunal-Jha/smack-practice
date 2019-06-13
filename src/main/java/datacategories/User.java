@@ -2,11 +2,15 @@ package datacategories;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
 import java.io.IOException;
 import java.io.Serializable;
+
+import static datacategories.Utils.getMapper;
 
 @Data
 public class User implements Serializable {
@@ -84,7 +88,7 @@ public class User implements Serializable {
     }
 
     public static User parseJson(String json) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = getMapper();
         return objectMapper.readValue(json, User.class);
     }
 
