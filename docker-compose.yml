@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  spark-singleton:
+    image: mydockerkj/spark:test2
+    command: tail -F random
+    networks:
+      - webnet
+  cassandra:
+    image: cassandra:3.0
+    ports:
+      - "9160:9160"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+
+networks:
+  webnet:
