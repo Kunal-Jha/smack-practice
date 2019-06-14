@@ -34,4 +34,5 @@ using csql in the Cassandra container.
 There is already a jar in the run folder. A new jar can be made with 
 `.\gradle jar` command in the base folder. 
 
-**NOTE:** some of the text with unicode character `\u` fail to parse. Unfortunately, I could not fix it in time.  
+**NOTE:** Some of the text with unicode character like `\u` fail to parse. 
+Unfortunately, I could not fix it in time.  
