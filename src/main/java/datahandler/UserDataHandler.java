@@ -3,6 +3,7 @@ package datahandler;
 import com.datastax.driver.core.Session;
 import com.datastax.spark.connector.cql.CassandraConnector;
 import datacategories.User;
+import datacategories.UserJson;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -18,7 +19,7 @@ public class UserDataHandler {
     public static void main(String[] args) {
         final String inputFile = args[0];
         SparkConf conf = new SparkConf(true)
-                .setAppName("User Reader")
+                .setAppName("UserJson Reader")
                 .set("spark.cassandra.connection.host", args[1]);
         saveDataToCassandra(conf, inputFile);
     }
@@ -39,7 +40,7 @@ public class UserDataHandler {
         JavaRDD<User> map = sc.textFile(inputFile)
                 .map(text -> Arrays.asList(text.split("/n")))
                 .map(ele -> String.join("", ele))
-                .map(ele -> User.parseJson(ele));
+                .map(ele -> UserJson.parseJson(ele));
 
         javaFunctions(map).writerBuilder(KEY_SPACE, TABLE_NAME, mapToRow(User.class)).saveToCassandra();
         sc.stop();

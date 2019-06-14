@@ -3,6 +3,7 @@ package datahandler;
 import com.datastax.driver.core.Session;
 import com.datastax.spark.connector.cql.CassandraConnector;
 import datacategories.CheckIn;
+import datacategories.CheckInJson;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -37,7 +38,7 @@ public class CheckInDataHandler {
         JavaRDD<CheckIn> map = sc.textFile(inputFile)
                 .map(text -> Arrays.asList(text.split("/n")))
                 .map(ele -> String.join("", ele))
-                .map(ele -> CheckIn.parseJson(ele));
+                .map(ele -> CheckInJson.parseJson(ele));
 
         javaFunctions(map).writerBuilder(KEY_SPACE, TABLE_NAME, mapToRow(CheckIn.class)).saveToCassandra();
         sc.stop();

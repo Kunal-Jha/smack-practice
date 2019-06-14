@@ -1,51 +1,52 @@
 package datacategories;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.annotation.Nullable;
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-import static datacategories.Utils.getMapper;
-
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 public class Business implements Serializable {
-
-    @JsonProperty("business_id")
     String businessId;
-    @JsonProperty("name")
     String name;
-    @JsonProperty("address")
     String address;
-    @JsonProperty("city")
     String city;
-    @JsonProperty("state")
     String state;
-    @JsonProperty("postal_code")
     String postalCode;
-    @JsonProperty("latitude")
     Double latitude;
-    @JsonProperty("longitude")
     Double longitude;
-    @JsonProperty("stars")
     Double stars;
-    @JsonProperty("review_count")
     int reviewCount;
-    @JsonProperty("is_open")
     int isOpen;
-    @Nullable
-    @JsonProperty("attributes")
     Map<String, String> attributes;
-    @JsonProperty("categories")
-    String categories;
-    @Nullable
-    @JsonProperty("hours")
+    List<String> categories;
     Map<String, String> hours;
+
+    public Business(BusinessJson businessJson) {
+        this.businessId = businessJson.getBusinessId();
+        this.address = businessJson.getAddress();
+        this.name = businessJson.getName();
+        this.city = businessJson.getCity();
+        this.state = businessJson.getState();
+        this.postalCode = businessJson.getPostalCode();
+        this.latitude = businessJson.getLatitude();
+        this.longitude = businessJson.getLongitude();
+        this.stars = businessJson.getStars();
+        this.reviewCount = businessJson.getReviewCount();
+        this.isOpen = businessJson.getIsOpen();
+        this.attributes = Optional.ofNullable(businessJson.getAttributes()).orElse(null);
+        this.hours = Optional.ofNullable(businessJson.getHours()).orElse(null);
+        if (businessJson.getCategories() != null) {
+            this.categories = Arrays.asList(businessJson.getCategories().split(","));
+        }
+    }
 
     @Override
     public String toString() {
@@ -65,11 +66,5 @@ public class Business implements Serializable {
                 ", categories='" + categories + '\'' +
                 ", hours=" + hours +
                 '}';
-    }
-
-
-    public static Business parseJson(String json) throws IOException {
-        ObjectMapper objectMapper = getMapper();
-        return objectMapper.readValue(json, Business.class);
     }
 }

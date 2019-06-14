@@ -1,5 +1,6 @@
 package datacategories;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -9,6 +10,7 @@ import lombok.Data;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 
 import static datacategories.Utils.getMapper;
 
@@ -47,7 +49,8 @@ public class Review implements Serializable {
     }
 
     @JsonProperty("date")
-    String date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    Date date;
 
     public static Review parseJson(String json) throws IOException {
         ObjectMapper objectMapper = getMapper();

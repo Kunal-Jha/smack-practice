@@ -1,14 +1,14 @@
 package datacategories;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 
 import static datacategories.Utils.getMapper;
 
@@ -21,7 +21,8 @@ public class Tip implements Serializable {
     @JsonProperty("text")
     String text;
     @JsonProperty("date")
-    String date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    Date date;
     @JsonProperty("compliment_count")
     int complimentCount;
 

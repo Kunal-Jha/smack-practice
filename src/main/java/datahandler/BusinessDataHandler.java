@@ -3,6 +3,7 @@ package datahandler;
 import com.datastax.driver.core.Session;
 import com.datastax.spark.connector.cql.CassandraConnector;
 import datacategories.Business;
+import datacategories.BusinessJson;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -20,7 +21,7 @@ public class BusinessDataHandler {
 
         final String inputFile = args[0];
         SparkConf conf = new SparkConf(true)
-                .setAppName("Business Reader")
+                .setAppName("BusinessJson Reader")
                 .set("spark.cassandra.connection.host", args[1]);
         saveDataToCassandra(conf, inputFile);
     }
@@ -40,16 +41,12 @@ public class BusinessDataHandler {
         JavaRDD<Business> map = sc.textFile(inputFile)
                 .map(text -> Arrays.asList(text.split("/n")))
                 .map(ele -> String.join("", ele))
-                .map(ele -> Business.parseJson(ele));
+                .map(ele -> BusinessJson.parseJson(ele));
 
         javaFunctions(map).writerBuilder(KEY_SPACE, TABLE_NAME, mapToRow(Business.class)).saveToCassandra();
 
         sc.stop();
     }
 
-    public static void getDataFromCassanndra(SparkConf conf) {
-        JavaSparkContext sc = new JavaSparkContext(conf);
-        CassandraConnector connector = CassandraConnector.apply(sc.getConf());
 
-    }
 }

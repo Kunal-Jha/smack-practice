@@ -1,5 +1,6 @@
 package query;
 
+import datacategories.Business;
 import datacategories.Photo;
 import datacategories.Tip;
 import org.apache.spark.SparkConf;
@@ -14,7 +15,6 @@ import static com.datastax.spark.connector.japi.CassandraJavaUtil.mapRowTo;
 
 public class Query {
     private static final String KEY_SPACE = "spark_db";
-    private static final String TABLE_NAME = "photo";
 
     public static void main(String[] args) {
         SparkConf conf = new SparkConf(true)
@@ -27,14 +27,18 @@ public class Query {
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaPairRDD<String, Photo> photo = javaFunctions(sc)
                 .cassandraTable(KEY_SPACE, "photo", mapRowTo(Photo.class))
-                .keyBy((Function<Photo, String>) sale -> sale.getBusinessId());
+                .keyBy((Function<Photo, String>) photo1 -> photo1.getBusinessId());
 
         JavaPairRDD<String, Tip> tip = javaFunctions(sc)
                 .cassandraTable(KEY_SPACE, "tip", mapRowTo(Tip.class))
-                .keyBy((Function<Tip, String>) sale -> sale.getBusinessId());
+                .keyBy((Function<Tip, String>) tip1 -> tip1.getBusinessId());
 
-        JavaRDD<Tuple2<Photo, Tip>> values = photo.join(tip).values();
-        for (Tuple2<Photo, Tip> result : values.take(100)) {
+        JavaPairRDD<String, Business> business = javaFunctions(sc)
+                .cassandraTable(KEY_SPACE, "business", mapRowTo(Business.class))
+                .keyBy((Function<Business, String>) business1 -> business1.getBusinessId());
+
+        JavaRDD<Tuple2<Tuple2<Photo, Tip>, Business>> values = photo.join(tip).join(business).values();
+        for (Tuple2<Tuple2<Photo, Tip>, Business>  result : values.take(100)) {
             System.out.println(result);
         }
         sc.stop();

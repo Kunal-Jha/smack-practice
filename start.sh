@@ -10,7 +10,7 @@ data_docker=/data
 
 function copy() {
 	tmp_file=$1
-	echo Copying file to the $spark container $tmp_file
+	echo Copying $tmp_file file to the $spark container
 	rm -rf $tmp_dir 2>/dev/null
 	mkdir $tmp_dir
 	tar xvf $input_file -C $tmp_dir $1
@@ -19,6 +19,7 @@ function copy() {
 }
 
 function reset_data_folder() {
+    echo Cleaning up
 	docker exec -it $spark rm -rf $data_docker
 	docker exec -it $spark mkdir $data_docker
 }
@@ -50,9 +51,9 @@ function submit_query(){
 #Send jar
 docker cp $myJar $spark:/
 
-#reset_data_folder
-#copy review.json
-#submit_job datahandler.ReviewDataHandler
+reset_data_folder
+copy review.json
+submit_job datahandler.ReviewDataHandler
 
 #reset_data_folder
 #copy photo.json
@@ -74,4 +75,4 @@ docker cp $myJar $spark:/
 #copy user.json
 #submit_job datahandler.UserDataHandler
 
-submit_query query.Query
+#submit_query query.Query

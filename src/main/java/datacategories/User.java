@@ -1,63 +1,67 @@
 package datacategories;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
-
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
-import static datacategories.Utils.getMapper;
-
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 public class User implements Serializable {
-    @JsonProperty("user_id")
+
     private String userId;
-    @JsonProperty("name")
     private String name;
-    @JsonProperty("review_count")
+
     private int reviewCount;
-    @JsonProperty("yelping_since")
     private String yelpingSince;
-    @JsonProperty("useful")
     private int useful;
-    @JsonProperty("funny")
     private int funny;
-    @JsonProperty("cool")
     private int cool;
-    @JsonProperty("fans")
     private int fans;
-    @JsonProperty("compliment_hot")
     private int complimentHot;
-    @JsonProperty("compliment_more")
     private int complimentMore;
-    @JsonProperty("compliment_profile")
     private int complimentProfile;
-    @JsonProperty("compliment_cute")
     private int complimentCute;
-    @JsonProperty("compliment_list")
     private int complimentList;
-    @JsonProperty("compliment_note")
     private int complimentNote;
-    @JsonProperty("compliment_plain")
     private int complimentPlain;
-    @JsonProperty("compliment_cool")
     private int complimentCool;
-    @JsonProperty("compliment_funny")
     private int complimentFunny;
-    @JsonProperty("compliment_writer")
     private int complimentWriter;
-    @JsonProperty("compliment_photos")
     private int complimentPhotos;
-    @JsonProperty("elite")
     private String elite;
-    @JsonProperty("friends")
-    private String friends;
-    @JsonProperty("average_stars")
+
     private Double averageStars;
+
+    List<String> friends;
+
+    public User(UserJson userJson) {
+        this.userId = userJson.getUserId();
+        this.name = userJson.getName();
+        this.reviewCount = userJson.getReviewCount();
+        this.yelpingSince = userJson.getYelpingSince();
+        this.useful = userJson.getUseful();
+        this.cool = userJson.getCool();
+        this.fans = userJson.getFans();
+        this.complimentHot = userJson.getComplimentHot();
+        this.complimentMore = userJson.getComplimentMore();
+        this.complimentProfile = userJson.getComplimentProfile();
+        this.complimentCute = userJson.getComplimentCute();
+        this.complimentList = userJson.getComplimentList();
+        this.complimentNote = userJson.getComplimentNote();
+        this.complimentPlain = userJson.getComplimentPlain();
+        this.complimentCool = userJson.getComplimentCool();
+        this.complimentFunny = userJson.getComplimentFunny();
+        this.complimentWriter = userJson.getComplimentWriter();
+        this.complimentPhotos = userJson.getComplimentPhotos();
+        this.elite = userJson.getElite();
+        this.averageStars = userJson.getAverageStars();
+        this.friends = Arrays.asList(userJson.getFriends().split(","));
+    }
 
     @Override
     public String toString() {
@@ -86,10 +90,4 @@ public class User implements Serializable {
                 ", averageStars=" + averageStars +
                 '}';
     }
-
-    public static User parseJson(String json) throws IOException {
-        ObjectMapper objectMapper = getMapper();
-        return objectMapper.readValue(json, User.class);
-    }
-
 }
