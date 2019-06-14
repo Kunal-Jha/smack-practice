@@ -1,4 +1,4 @@
-#Spark to Cassandra for Yelp Dataset
+# Spark to Cassandra for Yelp Dataset
 
 This project reads the yelp [dataset](https://www.yelp.com/dataset_challenge/dataset) using Spark and writes 
 to Cassandra.
@@ -13,7 +13,7 @@ and writes to them
 Step 3 and performs join and displays the result on the console. 
 
 
-##Setup 
+## Setup 
 1. Execute the `./setup.sh` file under the `run` folder. It is recommended to pause and check that both the containers 
 (Spark and Cassandra) are running. 
 
