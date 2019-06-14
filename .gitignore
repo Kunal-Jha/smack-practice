@@ -14,5 +14,3 @@ gradlew.bat
 out/
 settings.gradle
 .DS_Store
-*.jar
-*.tar
