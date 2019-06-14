@@ -39,7 +39,6 @@ public class Review implements Serializable {
     @JsonProperty("cool")
     int cool;
     @JsonProperty("text")
-    @JsonFormat(shape=JsonFormat.Shape.STRING)
     String text;
 
     @Override

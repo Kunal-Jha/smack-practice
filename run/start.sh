@@ -51,28 +51,28 @@ function submit_query(){
 #Send jar
 docker cp $myJar $spark:/
 
-#reset_data_folder
-#copy review.json
+reset_data_folder
+copy review.json
 submit_job datahandler.ReviewDataHandler
 
-#reset_data_folder
-#copy photo.json
-#submit_job datahandler.PhotoDataHandler
+reset_data_folder
+copy photo.json
+submit_job datahandler.PhotoDataHandler
 
-#reset_data_folder
-#copy tip.json
-#submit_job datahandler.TipDataHandler
+reset_data_folder
+copy tip.json
+submit_job datahandler.TipDataHandler
 
-#reset_data_folder
-#copy checkin.json
-#submit_job datahandler.CheckInDataHandler
+reset_data_folder
+copy checkin.json
+submit_job datahandler.CheckInDataHandler
 
-#reset_data_folder
-#copy business.json
-#submit_job datahandler.BusinessDataHandler
+reset_data_folder
+copy business.json
+submit_job datahandler.BusinessDataHandler
 
-#reset_data_folder
-#copy user.json
-#submit_job datahandler.UserDataHandler
+reset_data_folder
+copy user.json
+submit_job datahandler.UserDataHandler
 
 #submit_query query.Query
