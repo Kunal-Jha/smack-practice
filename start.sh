@@ -51,8 +51,8 @@ function submit_query(){
 #Send jar
 docker cp $myJar $spark:/
 
-reset_data_folder
-copy review.json
+#reset_data_folder
+#copy review.json
 submit_job datahandler.ReviewDataHandler
 
 #reset_data_folder
